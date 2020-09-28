@@ -19,6 +19,10 @@ class MoviesPresenter: DataLoadable {
     
     let title = "Popular movies"
     
+    var allPagesLoaded: Bool {
+        return currentPage >= numberOfPages
+    }
+    
     private var currentPage: Int = 0
     private var numberOfPages: Int = 1
     
@@ -35,7 +39,7 @@ class MoviesPresenter: DataLoadable {
     
     
     func getMovies(completion: @escaping Completion) {
-        if currentPage >= numberOfPages {
+        if allPagesLoaded {
             return
         }
         currentPage += 1

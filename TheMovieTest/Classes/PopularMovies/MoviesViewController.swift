@@ -55,8 +55,10 @@ class MoviesViewController: UIViewController, Storyboardable {
         presenter.isLoading = { [weak self] isLoading in
             DispatchQueue.main.async {
                 if isLoading {
+                    self?.view.isUserInteractionEnabled = false
                     self?.activity.startAnimating()
                 } else {
+                    self?.view.isUserInteractionEnabled = true
                     self?.activity.stopAnimating()
                 }
             }
@@ -97,5 +99,13 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         // show trailer video if it exists
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if !presenter.allPagesLoaded &&
+            indexPath.row >= presenter.numberOfRows(in: indexPath.section) - 2
+        {
+            getMovies()
+        }
     }
 }

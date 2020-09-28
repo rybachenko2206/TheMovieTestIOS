@@ -1,6 +1,6 @@
 ## Build generated
 build/
-DerivedData
+DerivedData/
 build.xcarchive
 
 ## Various settings
@@ -10,6 +10,8 @@ xcuserdata/
 xcschemes/
 xcuserdata
 
+*.xcbkplist
+*.xcworkspacedata
 *.xcworkspace
 *.xcbkptlist
 *.xcuserdata
