@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MoviesViewController: UIViewController, Storyboardable {
     
@@ -86,8 +87,8 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let movie = presenter.movie(for: indexPath) else { return UITableViewCell() }
         
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MovieCell.self)
-//        cell
-        cell.movieTitleLabel.text = movie.title
+        cell.posterImageView.sd_setImage(with: movie.backdropUrl, placeholderImage: UIImage(named: "placeholder"))
+        cell.movieNameLabel.text = movie.title
         
         return cell
     }

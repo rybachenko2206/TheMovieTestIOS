@@ -10,17 +10,17 @@ import UIKit
 
 class MovieCell: UITableViewCell, ReusableCell {
     
-    @IBOutlet weak var movieImageView: UIImageView!
-    @IBOutlet weak var movieTitleLabel: UILabel!
+    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var movieNameLabel: UILabel!
     
     
-    static var height: CGFloat { return 154 }
+    static var height: CGFloat { return 162 }
     
 
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        movieImageView.layer.cornerRadius = 6.0
+        posterImageView.layer.cornerRadius = 6.0
     }
 
     
