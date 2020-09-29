@@ -62,4 +62,23 @@ class MoviesPresenter: DataLoadable {
         })
     }
     
+    func getVideos(for movieId: Int, completion: @escaping Completion) {
+        isLoading?(true)
+        network
+            .getVideos(for: movieId,
+                       completion: { [weak self] result in
+                        self?.isLoading?(false)
+                        
+                        switch result {
+                        case .failure(let error):
+                            self?.errorCompletion?(error)
+                            
+                        case .success(let response):
+                            let movie = self?.movies.first(where: { $0.id == response.id })
+                            movie?.videos = response.results
+                            completion()
+                        }
+            })
+    }
+    
 }

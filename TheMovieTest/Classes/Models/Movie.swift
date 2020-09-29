@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Movie: Decodable {
+class Movie: Decodable {
     let id: Int
     let posterPath: String?
     let backdropPath: String?
@@ -18,6 +18,8 @@ struct Movie: Decodable {
     let releaseDate: Date?
     let popularity: Double?
     let voteAverage: Double?
+    
+    var videos: [MovieVideo]?
     
     static let imagesUrl = "https://image.tmdb.org/t/p/w500"
     

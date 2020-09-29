@@ -45,6 +45,47 @@
             </objects>
             <point key="canvasLocation" x="893.60000000000002" y="138.98050974512745"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="7mQ-zv-o5J">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="hcR-rq-8zP" customClass="WebViewController" customModule="TheMovieTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P1u-7H-dj2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ryJ-fz-E0K">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="llU-Ms-cf8">
+                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                                <color key="color" red="0.52156862749999999" green="0.52156862749999999" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="MBu-HB-Wwl" firstAttribute="bottom" secondItem="ryJ-fz-E0K" secondAttribute="bottom" id="KeF-Jp-U41"/>
+                            <constraint firstItem="ryJ-fz-E0K" firstAttribute="leading" secondItem="MBu-HB-Wwl" secondAttribute="leading" id="Scq-gj-BoR"/>
+                            <constraint firstItem="ryJ-fz-E0K" firstAttribute="top" secondItem="MBu-HB-Wwl" secondAttribute="top" id="ejd-Hm-YsO"/>
+                            <constraint firstItem="MBu-HB-Wwl" firstAttribute="trailing" secondItem="ryJ-fz-E0K" secondAttribute="trailing" id="g8q-Qy-BTj"/>
+                            <constraint firstItem="llU-Ms-cf8" firstAttribute="centerY" secondItem="P1u-7H-dj2" secondAttribute="centerY" id="mpt-oV-UL4"/>
+                            <constraint firstItem="llU-Ms-cf8" firstAttribute="centerX" secondItem="P1u-7H-dj2" secondAttribute="centerX" id="rsf-wK-ygL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MBu-HB-Wwl"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="llU-Ms-cf8" id="UOF-O6-5sb"/>
+                        <outlet property="webView" destination="ryJ-fz-E0K" id="dm4-Fw-2id"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CXO-yN-FWs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1649" y="139"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="T9p-Ah-JTN">
             <objects>

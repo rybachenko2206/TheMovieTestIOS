@@ -76,6 +76,36 @@ class MoviesViewController: UIViewController, Storyboardable {
             self?.tableView.reloadData()
         })
     }
+    
+    private func playTrailer(for movie: Movie) {
+        var videoUrl: URL?
+        
+        let showVideoCompletion = { [weak self] in
+            guard let url = videoUrl else {
+                AlertManager
+                    .simpleAlert(title: "Video is not found",
+                                 message: "It looks like video trailer is not exist",
+                                 controller: self)
+                return
+            }
+            
+            let webViewVC = WebViewController.instantiate()
+            webViewVC.url = url
+            
+            self?.present(webViewVC, animated: true, completion: nil)
+        }
+        
+        if let videos = movie.videos {
+            videoUrl = videos.randomElement()?.youtubeVideoUrl
+            showVideoCompletion()
+        } else {
+            presenter.getVideos(for: movie.id, completion: {
+                videoUrl = movie.videos?.randomElement()?.youtubeVideoUrl
+                showVideoCompletion()
+            })
+        }
+    }
+    
 }
 
 
@@ -98,7 +128,9 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // show trailer video if it exists
+        guard let movie = presenter.movie(for: indexPath) else { return }
+        playTrailer(for: movie)
+//        playTrailer(at: URL(string: "https://www.youtube.com/watch?v=iLl9PANQov8"))
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
