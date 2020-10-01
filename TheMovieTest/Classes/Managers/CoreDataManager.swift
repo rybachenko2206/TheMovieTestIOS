@@ -29,10 +29,15 @@ class CoreDataManager {
     var mainContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
+    
+    var documentsDirectory:URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
 
     
-    // MARK: - Core Data Saving support
-
+    // MARK: - Public funcs
     func saveContext() {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -44,4 +49,17 @@ class CoreDataManager {
             }
         }
     }
+    
+    
+    func getAllFavoriteMovies() -> [CDFavoriteMovie] {
+        let fetchRequest = NSFetchRequest<CDFavoriteMovie>(entityName: CDFavoriteMovie.entityName)
+        do {
+            let results = try mainContext.fetch(fetchRequest)
+            return results
+        } catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    
 }

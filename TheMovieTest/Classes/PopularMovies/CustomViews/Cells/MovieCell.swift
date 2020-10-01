@@ -12,6 +12,15 @@ class MovieCell: UITableViewCell, ReusableCell {
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var movieNameLabel: UILabel!
+    @IBOutlet private weak var favoriteButton: UIButton!
+    
+    var isFavorite: Bool = false {
+        didSet {
+            favoriteButton.isSelected = isFavorite
+        }
+    }
+    
+    var favoriteTapCompletion: Completion?
     
     
     static var height: CGFloat { return 162 }
@@ -24,4 +33,7 @@ class MovieCell: UITableViewCell, ReusableCell {
     }
 
     
+    @IBAction private func favoriteButtonTapped(_ sender: Any) {
+        favoriteTapCompletion?()
+    }
 }

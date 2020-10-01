@@ -28,10 +28,24 @@
                             <constraint firstAttribute="height" constant="125" id="DhE-ih-sxT"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2RT-pi-IQH">
+                        <rect key="frame" x="264" y="8" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="BKc-s9-a7h"/>
+                            <constraint firstAttribute="height" constant="40" id="LB9-fl-LKt"/>
+                        </constraints>
+                        <state key="normal" image="heart"/>
+                        <state key="selected" image="heartSelected"/>
+                        <connections>
+                            <action selector="favoriteButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="QM2-2i-772"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="2RT-pi-IQH" secondAttribute="trailing" constant="16" id="7fd-Ey-d4l"/>
+                    <constraint firstItem="2RT-pi-IQH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="QeQ-mV-xRv"/>
+                    <constraint firstAttribute="trailing" secondItem="6Gz-I0-yHQ" secondAttribute="trailing" constant="16" id="Wtc-pk-WFE"/>
                     <constraint firstAttribute="bottom" secondItem="6Gz-I0-yHQ" secondAttribute="bottom" constant="6" id="Xfa-8F-z4o"/>
-                    <constraint firstAttribute="trailing" secondItem="6Gz-I0-yHQ" secondAttribute="trailing" constant="16" id="gFo-tB-cOM"/>
                     <constraint firstItem="a3Y-KR-8Do" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="iI7-F9-2Gy"/>
                     <constraint firstAttribute="trailing" secondItem="a3Y-KR-8Do" secondAttribute="trailing" constant="16" id="isT-lU-Gxc"/>
                     <constraint firstItem="6Gz-I0-yHQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mDG-P7-ETN"/>
@@ -41,10 +55,15 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="favoriteButton" destination="2RT-pi-IQH" id="T6F-W0-qlF"/>
                 <outlet property="movieNameLabel" destination="6Gz-I0-yHQ" id="AAo-dc-8Bp"/>
                 <outlet property="posterImageView" destination="a3Y-KR-8Do" id="G8k-15-MZI"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="161.71875"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="heart" width="16" height="16"/>
+        <image name="heartSelected" width="16" height="16"/>
+    </resources>
 </document>

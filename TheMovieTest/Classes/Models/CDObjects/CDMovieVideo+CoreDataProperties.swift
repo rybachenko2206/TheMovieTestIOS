@@ -46,7 +46,10 @@ extension CDMovieVideo {
         guard let entityDescr = NSEntityDescription.entity(forEntityName: CDMovieVideo.entityName, in: context) else {
             fatalError("create CDMovieVideo error received")
         }
-        let cdVideo = CDMovieVideo(entity: entityDescr, insertInto: context)
+        var cdVideo: CDMovieVideo! = CDMovieVideo.video(with: movieVideo.key, in: context)
+        if cdVideo == nil {
+            cdVideo = CDMovieVideo(entity: entityDescr, insertInto: context)
+        }
         cdVideo.key = movieVideo.key
         cdVideo.name = movieVideo.name
         cdVideo.site = movieVideo.site

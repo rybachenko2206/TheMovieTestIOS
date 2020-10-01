@@ -15,7 +15,7 @@ class MoviesPresenter: DataLoadable {
     var isLoading: BoolCompletion?
     var errorCompletion: ErrorCompletion?
     
-    let network = NetworkManager()
+    private let network = NetworkManager()
     
     let title = "Popular movies"
     
@@ -28,6 +28,15 @@ class MoviesPresenter: DataLoadable {
     
     private var movies: [Movie] = []
     
+    private var favoriteMovies: [CDFavoriteMovie]
+    
+    
+    // MARK: - init
+    init() {
+        favoriteMovies = CoreDataManager.shared.getAllFavoriteMovies()
+    }
+    
+    
     // MARK: - Public funcs
     func numberOfRows(in section: Int) -> Int {
         return movies.count
@@ -35,6 +44,26 @@ class MoviesPresenter: DataLoadable {
     
     func movie(for indexPath: IndexPath) -> Movie? {
         return movies[safe: indexPath.row]
+    }
+    
+    func isMovieFavorite(_ movie: Movie) -> Bool {
+        return favoriteMovies.contains(where: { $0.id == movie.id })
+    }
+    
+    func addToFavorites(_ movie: Movie) {
+        let context = CoreDataManager.shared.mainContext
+        let cdMovie = CDFavoriteMovie.create(with: movie.id, in: context)
+        cdMovie.update(with: movie, in: context)
+        CoreDataManager.shared.saveContext()
+        favoriteMovies = CoreDataManager.shared.getAllFavoriteMovies()
+    }
+    
+    func removeFromFavorites(_ movie: Movie) {
+        let context = CoreDataManager.shared.mainContext
+        guard let cdMovie = CDFavoriteMovie.favoriteMovie(with: movie.id, in: context) else { return }
+        context.delete(cdMovie)
+        CoreDataManager.shared.saveContext()
+        favoriteMovies = CoreDataManager.shared.getAllFavoriteMovies()
     }
     
     
@@ -62,7 +91,7 @@ class MoviesPresenter: DataLoadable {
         })
     }
     
-    func getVideos(for movieId: Int, completion: @escaping Completion) {
+    func getVideos(for movieId: Int64, completion: @escaping Completion) {
         isLoading?(true)
         network
             .getVideos(for: movieId,
@@ -76,9 +105,26 @@ class MoviesPresenter: DataLoadable {
                         case .success(let response):
                             let movie = self?.movies.first(where: { $0.id == response.id })
                             movie?.videos = response.results
+                            self?.saveVideosIfNeeded(videos: response.results, movieId: movieId)
                             completion()
                         }
             })
+    }
+    
+    
+    // MARK: - Private funcs
+    private func saveVideosIfNeeded(videos: [MovieVideo], movieId: Int64) {
+        guard let favoriteMovie = favoriteMovies.first(where: { $0.id == movieId }) else { return }
+        
+        let cdMovieVideos: NSMutableSet = []
+        
+        let context = CoreDataManager.shared.mainContext
+        for video in videos {
+            let cdVideo = CDMovieVideo.create(with: video, in: context)
+            cdMovieVideos.add(cdVideo)
+        }
+        favoriteMovie.addToVideos(cdMovieVideos)
+        CoreDataManager.shared.saveContext()
     }
     
 }

@@ -49,27 +49,27 @@ extension CDFavoriteMovie {
 
 extension CDFavoriteMovie {
     
-    static func favoriteMovie(with movieId: Int64, in context: NSManagedObjectContext) -> CDFavoriteMovie {
+    static func favoriteMovie(with movieId: Int64, in context: NSManagedObjectContext) -> CDFavoriteMovie? {
         let fetchRequest = NSFetchRequest<CDFavoriteMovie>(entityName: CDFavoriteMovie.entityName)
         let predicate = NSPredicate(format: "id = %d",  movieId)
         fetchRequest.predicate = predicate
         do {
             let results = try context.fetch(fetchRequest)
-            
-            if let movie = results.first {
-                return movie
-            } else {
-                return CDFavoriteMovie.createMovie(with: movieId, in: context)
-            }
+            return results.first
         } catch let error as NSError {
             fatalError(error.localizedDescription)
         }
     }
     
-    private static func createMovie(with movieId: Int64, in context: NSManagedObjectContext) -> CDFavoriteMovie {
+    static func create(with movieId: Int64, in context: NSManagedObjectContext) -> CDFavoriteMovie {
         guard let entityDescr = NSEntityDescription.entity(forEntityName: CDFavoriteMovie.entityName, in: context) else {
             fatalError("create CDFavoriteMovie error received")
         }
+        
+        if let existingMovie = CDFavoriteMovie.favoriteMovie(with: movieId, in: context) {
+            return existingMovie
+        }
+        
         let movie = CDFavoriteMovie(entity: entityDescr, insertInto: context)
         movie.id = movieId
         return movie

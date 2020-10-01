@@ -14,7 +14,7 @@ class NetworkManager {
         request(with: .getPopularMovies(page: page), completion: completion)
     }
 
-    func getVideos(for movieId: Int, completion: @escaping (Result<GetVideosResult, TMError>) -> Void) {
+    func getVideos(for movieId: Int64, completion: @escaping (Result<GetVideosResult, TMError>) -> Void) {
         request(with: .getVideos(movieId: movieId.description), completion: completion)
     }
 

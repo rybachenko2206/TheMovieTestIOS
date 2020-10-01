@@ -10,7 +10,7 @@ import Foundation
 
 
 class Movie: Decodable {
-    let id: Int
+    let id: Int64
     let posterPath: String?
     let backdropPath: String?
     let title: String?

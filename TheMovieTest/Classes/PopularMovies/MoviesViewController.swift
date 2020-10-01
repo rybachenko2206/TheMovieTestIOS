@@ -106,6 +106,17 @@ class MoviesViewController: UIViewController, Storyboardable {
         }
     }
     
+    private func favoriteButtonTapped(at indexPath: IndexPath) {
+        guard let movie = presenter.movie(for: indexPath) else { return }
+        if presenter.isMovieFavorite(movie) {
+            presenter.removeFromFavorites(movie)
+        } else {
+            presenter.addToFavorites(movie)
+        }
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
 }
 
 
@@ -121,6 +132,10 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: MovieCell.self)
         cell.posterImageView.sd_setImage(with: movie.backdropUrl, placeholderImage: UIImage(named: "placeholder"))
         cell.movieNameLabel.text = movie.title
+        cell.isFavorite = presenter.isMovieFavorite(movie)
+        cell.favoriteTapCompletion = { [weak self] in
+            self?.favoriteButtonTapped(at: indexPath)
+        }
         
         return cell
     }
