@@ -22,4 +22,9 @@ class Utils {
         df.dateFormat = "yyyy-mm-dd"
         return df
     }()
+    
+    static let appDocumentsDirectory: URL = {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return urls[urls.count - 1]
+    }()
 }

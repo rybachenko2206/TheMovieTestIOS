@@ -1,5 +1,5 @@
 //
-//  Video.swift
+//  MovieVideo.swift
 //  TheMovieTest
 //
 //  Created by Roman Rybachenko on 28.09.2020.
